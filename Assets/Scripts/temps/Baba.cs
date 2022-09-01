@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class Baba : MonoBehaviour
 {
-    
+    protected int Value;
     void Start()
     {
         
-        GridManager.Instance.CreateGameGrid();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void PrintValue()
+    {
+        Value = 5;
+        Debug.Log(Value);
     }
 }

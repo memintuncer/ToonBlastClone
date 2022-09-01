@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class GameManager : MonoBehaviour
+public class GameGoal : MonoBehaviour
 {
-    
+  
+
     void Start()
     {
         
-        GridManager.Instance.CreateGameGrid();
     }
 
     // Update is called once per frame
@@ -16,4 +17,9 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    
+
+
+   
 }

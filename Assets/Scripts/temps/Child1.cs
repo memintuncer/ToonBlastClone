@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class Child1 : Baba
 {
-    
+    // Start is called before the first frame update
     void Start()
     {
         
-        GridManager.Instance.CreateGameGrid();
     }
 
     // Update is called once per frame
@@ -16,4 +15,6 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    
 }

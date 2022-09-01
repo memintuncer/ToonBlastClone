@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class GridCreator : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] int HorizontalGridCount, VerticalGridCount;
+    public CubeObjectCreator CubeObjectCreator;
+    [SerializeField] GameObject GridPrefab;
+    [SerializeField] private Transform GridMatrix;
     void Start()
     {
-        
+        CreateGameGridMatrix();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+
+    void CreateGameGridMatrix()
+    {
+       
+    }
+
+
+    public void GetGridMatrix()
+    {
+       
     }
 }

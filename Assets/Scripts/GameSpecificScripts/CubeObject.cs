@@ -5,18 +5,18 @@ using UnityEngine;
 public class CubeObject : MonoBehaviour
 {
 
-    enum CubeType
+    enum CubeColor
     {
         None,
-        MoonCube,
-        LeafCube,
-        CloudCube,
-        HeartCube,
-        WaterDropCube
+        Yellow,
+        Green,
+        Purple,
+        Red,
+        Blue
     }
 
-    [SerializeField] private Sprite CubeImage;
-    [SerializeField] private CubeType Type;
+    
+    [SerializeField] private CubeColor Type;
     private float ScaleRatio=1;
     
 
