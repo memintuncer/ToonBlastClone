@@ -6,57 +6,77 @@ public class ExplodeCubesAlgorithm : MonoBehaviour
 {
     Dictionary<int, List<int> > EmptyTiles = new Dictionary<int, List<int>>();
     Dictionary<int, int> EmptyTilesCounts = new Dictionary<int, int>();
+    Cube SelectedCube;
     private void OnEnable()
     {
         EventManager.StartListening(GameConstants.GameEvents.COLOR_CUBE_SEARCH_COMPLETED, ColorCubeSearchExplosions);
+        EventManager.StartListening(GameConstants.GameEvents.DESTOYER_EXPLOSION, DestoyerExplosion);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening(GameConstants.GameEvents.COLOR_CUBE_SEARCH_COMPLETED, ColorCubeSearchExplosions);
+        EventManager.StopListening(GameConstants.GameEvents.DESTOYER_EXPLOSION, DestoyerExplosion);
     }
 
     void ColorCubeSearchExplosions(EventParam param)
     {
-        List<ColorCube> color_cubes_to_be_deleted = param.GetColorCubesToBeDeleted();
+        SelectedCube = param.GetSelectedCube();
+        List<Cube> color_cubes_to_be_deleted = param.GetColorCubesToBeDeleted();
         List<AffectedByExplosionCube> affected_cubes_to_be_deleted = param.GetAffectedByExplosionCubesToBeDeleted();
         if (color_cubes_to_be_deleted.Count > 1)
         {
-            foreach (ColorCube c_b in color_cubes_to_be_deleted)
+            foreach (Cube c_b in color_cubes_to_be_deleted)
             {
 
                 TileGrid tile = c_b.GetParentTile();
                 tile.RemoveCubeFromTile();
                 UpdateEmptyTiles(tile);
-                Destroy(c_b.gameObject);
-                
+                //Destroy(c_b.gameObject);
+                c_b.gameObject.SetActive(false);
                
             }
 
+
+            foreach (AffectedByExplosionCube c_b in affected_cubes_to_be_deleted)
+            {
+                TileGrid tile = c_b.GetParentTile();
+                tile.RemoveCubeFromTile();
+                UpdateEmptyTiles(tile);
+
+
+                c_b.CheckExplosionCondition();
+
+
+            }
+            param.SetEmptyTiles(EmptyTiles);
+            param.SetEmptyTilesCount(EmptyTilesCounts);
+
+
             
-            //foreach (AffectedByExplosionCube c_b in affected_cubes_to_be_deleted)
-            //{
-            //    TileGrid tile = c_b.GetParentTile();
-            //    tile.RemoveCubeFromTile();
-            //    UpdateEmptyTiles(tile);
 
-              
-            //    c_b.CheckExplosionCondition();
-                
+            foreach(int key in param.GetEmptyTiles().Keys)
+            {
+                Debug.Log("Come");
+                foreach(int i in param.GetEmptyTiles()[ key])
+                {
+                    Debug.Log(key+ "==" + i);
+                }
+            }
 
-            //}
 
-            SendEmptyTilesMessage(param);
+            EventManager.TriggerEvent(GameConstants.GameEvents.CHECK_FOR_DESTROYER_CREATION, param);
+            
+            //SendEmptyTilesMessage(param);
+            
+
 
 
         }
 
-        EventManager.TriggerEvent(GameConstants.GameEvents.CHECK_FOR_DESTROYER_CREATION, param);
 
-        if (color_cubes_to_be_deleted.Count > 1)
-        {
-            //SendEmptyTilesMessage(param,EmptyTiles);
-        }
+
+       
         color_cubes_to_be_deleted.Clear();
         affected_cubes_to_be_deleted.Clear();
         param.SetColorCubesToBeDeleted(color_cubes_to_be_deleted);
@@ -65,7 +85,28 @@ public class ExplodeCubesAlgorithm : MonoBehaviour
 
     
 
-    
+    void DestoyerExplosion(EventParam param)
+    {
+        List<Cube> cubes_to_be_deleted = param.GetColorCubesToBeDeleted();
+        foreach (Cube cube in cubes_to_be_deleted)
+        {
+
+            TileGrid tile = cube.GetParentTile();
+            tile.RemoveCubeFromTile();
+            UpdateEmptyTiles(tile);
+            //Destroy(c_b.gameObject);
+            cube.gameObject.SetActive(false);
+
+        }
+
+
+        param.SetEmptyTiles(EmptyTiles);
+        param.SetEmptyTilesCount(EmptyTilesCounts);
+
+        
+        SendEmptyTilesMessage(param);
+        cubes_to_be_deleted.Clear();
+    }
 
     void UpdateEmptyTiles(TileGrid tile)
     {
@@ -115,8 +156,8 @@ public class ExplodeCubesAlgorithm : MonoBehaviour
 
     void SendEmptyTilesMessage(EventParam param)
     {
-        param.SetEmptyTiles(EmptyTiles);
-        param.SetEmptyTilesCount(EmptyTilesCounts);
+       // param.SetEmptyTiles(EmptyTiles);
+       // param.SetEmptyTilesCount(EmptyTilesCounts);
         EventManager.TriggerEvent(GameConstants.GameEvents.START_FILLING_EMPTY_TILES, param);
     }
 

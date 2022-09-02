@@ -58,15 +58,18 @@ public class GridManager :  SingletonComponent<GridManager>
                 Cube cube_object_script = cube_object.GetComponent<Cube>();
                 
                 TileGrid tile_grid = tile_object.GetComponent<TileGrid>();
+                Point matrix_point = new Point(i, j); // i=x, j=y
+                tile_grid.SetMatrixPoint(matrix_point);
                 tile_grid.AddCubeToTile(cube_object_script);
                 cube_object.transform.parent = tile_grid.transform;
                 tile_grid.transform.parent = GridMatrix;
                 tile_grid.transform.localPosition = Vector2.zero + new Vector2(j,i)/2;
                 cube_object.transform.localPosition = Vector2.zero;
                 cube_object_script.SetParentTile(tile_grid);
+                cube_object_script.SetCubeImageOrder();
                 tile_object.transform.localScale /= 2;
-                Point matrix_point = new Point(i, j); // i=x, j=y
-                tile_grid.SetMatrixPoint(matrix_point);
+                
+                
                 temp.Add(tile_grid);
                 tile_grid.gameObject.name = tile_grid.gameObject.name + (i).ToString() + "X"  + (j).ToString();
 

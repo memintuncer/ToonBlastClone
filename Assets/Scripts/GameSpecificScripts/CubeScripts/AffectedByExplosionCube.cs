@@ -28,6 +28,7 @@ public class AffectedByExplosionCube : Cube
         if (NeighbourExplosionType.Equals(RequiredExplosionType) && RequiredExplosionCount>0)
         {
             RequiredExplosionCount--;
+            
         }
     }
 

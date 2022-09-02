@@ -18,8 +18,6 @@ public class ColorCube : Cube
     
     [SerializeField] private ColorType Color;
 
-    private List<ColorCube> SameColorNeighBours = new List<ColorCube>();
-    private List<AffectedByExplosionCube> AffectedByExplosionCubes = new List<AffectedByExplosionCube>();
     public ColorType GetColor()
     {
         return Color;
@@ -43,7 +41,7 @@ public class ColorCube : Cube
     private void OnMouseDown()
     {
         base.OnMouseDown();
-        //SearchForNeighbours();
+        
         SendColorCubeSelectedMessage();
         
     }
@@ -57,16 +55,7 @@ public class ColorCube : Cube
         EventManager.TriggerEvent(GameConstants.GameEvents.COLOR_CUBE_SELECTED, color_cube_param);
     }
 
-    private void SearchForNeighbours()
-    {
-
-        //gridManager.TileMatrix;
-    }
-
-    void CheckTraversedCube()
-    {
-
-    }
-
+   
+    
    
 }

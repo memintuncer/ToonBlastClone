@@ -99,10 +99,11 @@ public class EventParam
 
     private  Cube SelectedColorCube;
     private  List<List<TileGrid>> TileMatrix = new List<List<TileGrid>>();
-    private  List<ColorCube> ColorCubesToBeDeleted = new List<ColorCube>();
+    private  List<Cube> ColorCubesToBeDeleted = new List<Cube>();
     private  List<AffectedByExplosionCube> AffectedByExplosionCubesToBeDeleted = new List<AffectedByExplosionCube>();
     Dictionary<int, List<int>> EmptyTiles = new Dictionary<int, List<int>>();
     Dictionary<int, int> EmptyTilesCounts = new Dictionary<int, int>();
+
     public void SetEmptyTiles(Dictionary<int, List<int>> empty_tiles)
     {
         EmptyTiles = empty_tiles;
@@ -143,11 +144,11 @@ public class EventParam
         return TileMatrix;
     }
 
-    public List<ColorCube> GetColorCubesToBeDeleted()
+    public List<Cube> GetColorCubesToBeDeleted()
     {
         return ColorCubesToBeDeleted;
     }
-    public void SetColorCubesToBeDeleted(List<ColorCube> color_cubes)
+    public void SetColorCubesToBeDeleted(List<Cube> color_cubes)
     {
         ColorCubesToBeDeleted = color_cubes;
     }

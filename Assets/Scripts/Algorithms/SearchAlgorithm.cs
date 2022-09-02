@@ -7,8 +7,9 @@ public class SearchAlgorithm : MonoBehaviour
 
     List<TileGrid> TraversedTiles = new List<TileGrid>();
     List<AffectedByExplosionCube> AffectedByExplosionCubesToBeDeleted = new List<AffectedByExplosionCube>();
-    List<ColorCube> ColorCubesToBeDeleted = new List<ColorCube>();
-    Dictionary<int, int> DeletedMatrixIndexes = new Dictionary<int, int>(); 
+    List<Cube> ColorCubesToBeDeleted = new List<Cube>();
+    Dictionary<int, int> DeletedMatrixIndexes = new Dictionary<int, int>();
+    Cube SelectedCube;
     private void OnEnable()
     {
         EventManager.StartListening(GameConstants.GameEvents.COLOR_CUBE_SELECTED,StartSearching);   
@@ -44,12 +45,12 @@ public class SearchAlgorithm : MonoBehaviour
     {
         List<List<TileGrid>> tile_matrix = GridManager.GetTileMatrix();
         Point start_point = selected_cube.GetParentTile().GetMatrixPoint();
-        ColorCubesToBeDeleted.Add((ColorCube)selected_cube);
+        ColorCubesToBeDeleted.Add(selected_cube);
         TraversedTiles.Add(selected_cube.GetParentTile());
         TraverseNew(tile_matrix,TraversedTiles,ColorCubesToBeDeleted,AffectedByExplosionCubesToBeDeleted, ((ColorCube)selected_cube).GetColor());
         
 
-        SendSearchIsFinishedMessage();
+        SendSearchIsFinishedMessage(selected_cube);
 
         //if (ColorCubesToBeDeleted.Count > 1)
         //{
@@ -80,14 +81,15 @@ public class SearchAlgorithm : MonoBehaviour
     }
 
 
-    void SendSearchIsFinishedMessage()
+    void SendSearchIsFinishedMessage(Cube selected_cube)
     {
         EventParam param = new EventParam();
         param.SetAffectedByExplosionCubesToBeDeleted(AffectedByExplosionCubesToBeDeleted);
         param.SetColorCubesToBeDeleted(ColorCubesToBeDeleted);
         EventManager.TriggerEvent(GameConstants.GameEvents.COLOR_CUBE_SEARCH_COMPLETED, param);
+        param.SetSelectedCube((ColorCube)selected_cube);
     }
-    void TraverseNew(List<List<TileGrid>> tile_matrix, List<TileGrid> elementsToBeTraversed, List<ColorCube> color_cubes_to_be_deleted,
+    void TraverseNew(List<List<TileGrid>> tile_matrix, List<TileGrid> elementsToBeTraversed, List<Cube> color_cubes_to_be_deleted,
         List<AffectedByExplosionCube> affectible_cubes_to_be_deleted, ColorCube.ColorType selected_color)
     {
         while (elementsToBeTraversed.Count > 0)

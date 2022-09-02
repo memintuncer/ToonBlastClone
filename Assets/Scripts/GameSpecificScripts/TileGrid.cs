@@ -41,16 +41,17 @@ public class TileGrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.childCount > 1)
-        {
-            int x = 1;
-        }
+        //if (transform.childCount > 1)
+        //{
+        //    Debug.Log(gameObject.name);
+        //}
     }
 
     public void AddCubeToTile(Cube new_cube)
     {
         IsEmpty = false;
         CurrentCube = new_cube;
+        CurrentCube.transform.parent = transform;
     } 
     public void RemoveCubeFromTile()
     {
@@ -58,38 +59,18 @@ public class TileGrid : MonoBehaviour
         CurrentCube = null;
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.tag == "Cube")
-        //{
-        //    if (CurrentCube == null)
-        //    {
-        //        Cube new_cube = collision.GetComponent<Cube>();
-        //        AddCubeToTile(new_cube);
-        //        new_cube.transform.parent = transform;
-        //        new_cube.SetParentTile(this);
-        //    }
-            
-        //    //if (ParentTileGrid == null)
-        //    //{
-        //    //    ParentTileGrid = new_cube;
-        //    //    SetParentTile(new_cube);
-        //    //    new_cube.AddCubeToTile(this);
-        //    //    transform.parent = new_cube.transform;
+        if (collision.tag == "Tile")
+        {
+            Cube cube = collision.transform.parent.GetComponent<Cube>();
 
-        //    //}
-        //    //if (ParentTileGrid.gameObject != collision)
-        //    //{
+            cube.SetParentTile(this);
+            AddCubeToTile(cube);
+          
+        }
 
-        //    //    SetParentTile(new_cube);
-        //    //    new_cube.AddCubeToTile(this);
-        //    //    transform.parent = new_cube.transform;
-        //    //}
-        //}
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        
     }
 
 }
