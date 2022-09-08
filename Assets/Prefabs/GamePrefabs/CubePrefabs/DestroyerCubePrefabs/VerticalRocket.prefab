@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 7349662368088071684}
   - component: {fileID: 1775001182638649752}
   - component: {fileID: -4597757942122884274}
+  - component: {fileID: 3140913669504742117}
   m_Layer: 0
   m_Name: VerticalRocket
   m_TagString: Untagged
@@ -131,11 +132,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f055163798d10af44bfa74571b6077fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  cubeType: 1
   IsClickable: 1
-  CubeAnimator: {fileID: 0}
+  CubeAnimator: {fileID: 3140913669504742117}
   ParentTileGrid: {fileID: 0}
   CanFall: 1
+  ParticleEffect: {fileID: 0}
+  ParticleEffectPrefab: {fileID: 2159412803250698780, guid: 7040b913e45d17a4481d2615aa70581e, type: 3}
   Direction: 0
 --- !u!50 &1775001182638649752
 Rigidbody2D:
@@ -182,8 +185,28 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 1}
+  m_Size: {x: 0.75, y: 0.95}
   m_EdgeRadius: 0
+--- !u!95 &3140913669504742117
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7349662368088071682}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c410d4755887e9646a0ddec5013ffc01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7349662368644177092
 GameObject:
   m_ObjectHideFlags: 0

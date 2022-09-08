@@ -19,6 +19,10 @@ PrefabInstance:
       propertyPath: Color
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1430020182192141210, guid: 7f68b7202dd7faa4f978c44bead98461, type: 3}
+      propertyPath: ParticleEffectPrefab
+      value: 
+      objectReference: {fileID: 2159412803250698780, guid: 3680b7f0b2b89814aac072250c130547, type: 3}
     - target: {fileID: 1430020182192141211, guid: 7f68b7202dd7faa4f978c44bead98461, type: 3}
       propertyPath: m_RootOrder
       value: 0

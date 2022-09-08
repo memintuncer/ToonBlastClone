@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
+
+//Tile for matrix Grid. It holds the cubes for matrix search, destroy and fill
+
 [System.Serializable]
 public class TileGrid : MonoBehaviour
 {
@@ -38,15 +43,7 @@ public class TileGrid : MonoBehaviour
         PositionVector = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (transform.childCount > 1)
-        //{
-        //    Debug.Log(gameObject.name);
-        //}
-    }
-
+    
     public void AddCubeToTile(Cube new_cube)
     {
         IsEmpty = false;
@@ -56,21 +53,9 @@ public class TileGrid : MonoBehaviour
     public void RemoveCubeFromTile()
     {
         IsEmpty = true;
-        CurrentCube = null;
+        
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Tile")
-        {
-            Cube cube = collision.transform.parent.GetComponent<Cube>();
-
-            cube.SetParentTile(this);
-            AddCubeToTile(cube);
-          
-        }
-
-    }
-
+   
 }

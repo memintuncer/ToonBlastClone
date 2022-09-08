@@ -8,7 +8,10 @@ public class AffectedByExplosionCube : Cube
     [SerializeField] protected int RequiredExplosionCount;
     [SerializeField] protected Cube.CubeType RequiredExplosionType;
     protected Cube.CubeType NeighbourExplosionType;
-    
+
+
+    public bool DestoyerExplosion=false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,15 +24,38 @@ public class AffectedByExplosionCube : Cube
         
     }
 
-    public void Boo() { }
+    
    
-    public virtual void CheckExplosionCondition()
+    public virtual void CheckExplosionCondition(Transform particle_parent)
     {
-        if (NeighbourExplosionType.Equals(RequiredExplosionType) && RequiredExplosionCount>0)
+
+        if (!DestoyerExplosion)
+        {
+            if (NeighbourExplosionType.Equals(RequiredExplosionType) && RequiredExplosionCount > 0)
+            {
+                RequiredExplosionCount--;
+
+            }
+        }
+
+        else
         {
             RequiredExplosionCount--;
-            
         }
+
+        //if (NeighbourExplosionType.Equals(Cube.CubeType.Destroyer))
+        //{
+        //    RequiredExplosionCount--;
+        //}
+
+        //else
+        //{
+        //    if (NeighbourExplosionType.Equals(RequiredExplosionType) && RequiredExplosionCount > 0)
+        //    {
+        //        RequiredExplosionCount--;
+
+        //    }
+        //}
     }
 
     public void SendNeighbourType(CubeType neighbour_cube_type)

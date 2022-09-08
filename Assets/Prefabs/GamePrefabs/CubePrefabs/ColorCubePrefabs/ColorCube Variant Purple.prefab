@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: CanFall
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1234335509164701981, guid: 3b468fe6e7975d8498a10954bde1cb81, type: 3}
+      propertyPath: ParticleEffectPrefab
+      value: 
+      objectReference: {fileID: 2159412803250698780, guid: 04742ae7e5ecb40479ae4790914ee326, type: 3}
     - target: {fileID: 1234335509164701982, guid: 3b468fe6e7975d8498a10954bde1cb81, type: 3}
       propertyPath: m_Name
       value: ColorCube Variant Purple

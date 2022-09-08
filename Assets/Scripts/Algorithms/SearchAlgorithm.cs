@@ -8,8 +8,7 @@ public class SearchAlgorithm : MonoBehaviour
     List<TileGrid> TraversedTiles = new List<TileGrid>();
     List<AffectedByExplosionCube> AffectedByExplosionCubesToBeDeleted = new List<AffectedByExplosionCube>();
     List<Cube> ColorCubesToBeDeleted = new List<Cube>();
-    Dictionary<int, int> DeletedMatrixIndexes = new Dictionary<int, int>();
-    Cube SelectedCube;
+    
     private void OnEnable()
     {
         EventManager.StartListening(GameConstants.GameEvents.COLOR_CUBE_SELECTED,StartSearching);   
@@ -29,14 +28,10 @@ public class SearchAlgorithm : MonoBehaviour
         switch (selected_cube.GetCubeType())
         {
             case Cube.CubeType.Normal:
-                //Debug.Log(selected_cube.name);
+                
                 SearchForNeighbours(selected_cube);
                 break;
-            case Cube.CubeType.Destroyer:
-
-                Debug.Log(selected_cube.name +"X");
-                Destroy(selected_cube.gameObject);
-                break;
+           
         }
     }
 
@@ -52,30 +47,10 @@ public class SearchAlgorithm : MonoBehaviour
 
         SendSearchIsFinishedMessage(selected_cube);
 
-        //if (ColorCubesToBeDeleted.Count > 1)
-        //{
-        //    foreach (ColorCube c_b in ColorCubesToBeDeleted)
-        //    {
-        //        Destroy(c_b.gameObject);
-        //        c_b.GetParentTile().RemoveCubeFromTile();
-        //    }
-
-
-        //    foreach (AffectedByExplosionCube c_b in AffectedByExplosionCubesToBeDeleted)
-        //    {
-        //        Destroy(c_b.gameObject);
-        //        c_b.GetParentTile().RemoveCubeFromTile();
-        //    }
+        
 
 
 
-        //}
-        //ColorCubesToBeDeleted.Clear();
-        //AffectedByExplosionCubesToBeDeleted.Clear();
-        //Destroy((tile_matrix[start_point.GetMatrixIndexY()][start_point.GetMatrixIndexX()]).gameObject);
-
-
-        //GridManager.SetTileMatrix(tile_matrix);
 
 
     }
@@ -86,8 +61,9 @@ public class SearchAlgorithm : MonoBehaviour
         EventParam param = new EventParam();
         param.SetAffectedByExplosionCubesToBeDeleted(AffectedByExplosionCubesToBeDeleted);
         param.SetColorCubesToBeDeleted(ColorCubesToBeDeleted);
-        EventManager.TriggerEvent(GameConstants.GameEvents.COLOR_CUBE_SEARCH_COMPLETED, param);
         param.SetSelectedCube((ColorCube)selected_cube);
+        EventManager.TriggerEvent(GameConstants.GameEvents.COLOR_CUBE_SEARCH_COMPLETED, param);
+        
     }
     void TraverseNew(List<List<TileGrid>> tile_matrix, List<TileGrid> elementsToBeTraversed, List<Cube> color_cubes_to_be_deleted,
         List<AffectedByExplosionCube> affectible_cubes_to_be_deleted, ColorCube.ColorType selected_color)
@@ -140,15 +116,12 @@ public class SearchAlgorithm : MonoBehaviour
                         {
                             ((AffectedByExplosionCube)tile_matrix[x][y].GetCurrentCube()).SendNeighbourType(TraversedTiles[0].GetCurrentCube().GetCubeType());
                             affectible_cubes_to_be_deleted.Add((AffectedByExplosionCube)tile_matrix[x][y].GetCurrentCube());
-                            //elementsToBeTraversed.Add(tile_matrix[x][y]);
+                            
                         }
 
                     }
                 }
    
-                
-
-                
 
 
 
@@ -158,14 +131,4 @@ public class SearchAlgorithm : MonoBehaviour
     }
     
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

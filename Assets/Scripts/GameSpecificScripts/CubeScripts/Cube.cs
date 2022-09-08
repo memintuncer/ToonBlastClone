@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//Main class of cube classes. Every other cube classes are inhetired from this Script
 public class Cube : MonoBehaviour
 {
     public enum CubeType
@@ -13,27 +13,32 @@ public class Cube : MonoBehaviour
         Bottom
     }
 
-    [SerializeField] protected CubeType Type;
+    [SerializeField] protected CubeType cubeType;
     
     [SerializeField] protected bool IsClickable;
-    [SerializeField] Animator CubeAnimator;
+    [SerializeField] protected Animator CubeAnimator;
     [SerializeField] private TileGrid ParentTileGrid;
     [SerializeField] private bool CanFall=true;
     Rigidbody2D RB;
 
     private SpriteRenderer CubeImage;
 
-    Collider2D collider;
+    protected Collider2D SelfCollider;
+    [SerializeField] ParticleSystem ParticleEffect;
+    [SerializeField] protected GameObject ParticleEffectPrefab;
+
+    protected bool CanPlay=true;
 
 
-    public void SetCubeImageOrder()
+
+  
+
+    public GameObject GetParticleEffect()
     {
-        //int order = 3;
-        //Point point = ParentTileGrid.GetMatrixPoint();
-        //order = point.GetMatrixIndexX() + 3;
-        //CubeImage.sortingOrder = order;
-
+        return ParticleEffectPrefab;
     }
+
+    
 
     public bool GetCanFall()
     {
@@ -51,33 +56,61 @@ public class Cube : MonoBehaviour
 
     public CubeType GetCubeType()
     {
-        return Type;
+        return cubeType;
     }
 
    
 
     protected  void OnMouseDown()
     {
-        
-        if (!IsClickable)
+        if (CanPlay)
         {
-            //PlayDITDIT
+            if (!IsClickable)
+            {
+                //PlayDITDIT
+                return;
+            }
+        }
+        else
+        {
             return;
         }
        
     }
 
-    private void Start()
+    private void Awake()
     {
         CubeAnimator = GetComponent<Animator>();
         RB = GetComponent<Rigidbody2D>();
-        RB.bodyType = RigidbodyType2D.Kinematic;
-        collider = GetComponent<Collider2D>();
-        //CubeImage = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        //CubeImage.enabled = false;
+        
+        SelfCollider = GetComponent<Collider2D>();
+        
     }
 
-    
+    public void DestroyCube(Transform particle_parent)
+    {
+        if (cubeType == CubeType.Normal)
+        {
+            GameObject particle = Instantiate(ParticleEffectPrefab, transform.position, Quaternion.identity);
+            particle.transform.parent = transform;
 
+            particle.transform.localScale =Vector2.one/2;
 
+            particle.transform.parent = particle_parent;
+            Destroy(gameObject);
+           
+            
+            
+
+        }
+
+        else { Destroy(gameObject); }
+    }
+
+    public void ActivateCube()
+    {
+        CubeImage.enabled = true;
+    }
+
+   
 }

@@ -16,17 +16,7 @@ public class Rocket : DestoyerCube
     {
         return Direction;
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+  
     private void OnMouseDown()
     {
         base.OnMouseDown();
@@ -54,7 +44,7 @@ public class Rocket : DestoyerCube
         EventParam param = new EventParam();
         param.SetColorCubesToBeDeleted(cubes_to_be_destroyed);
         EventManager.TriggerEvent(GameConstants.GameEvents.DESTOYER_EXPLOSION, param);
-        gameObject.SetActive(false);
+        
     }
 
     
@@ -63,7 +53,12 @@ public class Rocket : DestoyerCube
     {
         for(int i = 0; i < GridManager.GetMatrixWidth(); i++)
         {
-            cubes_to_be_destroyed.Add((GridManager.GetTileMatrix()[point_x][i]).GetCurrentCube());
+            Cube cube = GridManager.GetTileMatrix()[point_x][i].GetCurrentCube();
+            if (!cube.GetCubeType().Equals(Cube.CubeType.Bottom))
+            {
+                cubes_to_be_destroyed.Add(cube);
+            }
+            
         }
     }
 
@@ -71,7 +66,13 @@ public class Rocket : DestoyerCube
     {
         for (int i = 0; i < GridManager.GetMatrixHeight(); i++)
         {
-            cubes_to_be_destroyed.Add((GridManager.GetTileMatrix()[i][point_y]).GetCurrentCube());
+            Cube cube = GridManager.GetTileMatrix()[i][point_y].GetCurrentCube();
+            if (!cube.GetCubeType().Equals(Cube.CubeType.Bottom))
+            {
+                cubes_to_be_destroyed.Add(cube);
+            }
+
+            
         }
     }
 }

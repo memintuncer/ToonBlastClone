@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8701885216769606988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8701885216769606987}
+  - component: {fileID: 8701885216769606986}
+  m_Layer: 0
+  m_Name: GridManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8701885216769606987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701885216769606988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8701885216769606986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701885216769606988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3137281078dec4c88559dd346a9b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  SpecialCubes:
+  - PosIndex: {x: 1, y: 5}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 3, y: 5}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 5, y: 5}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 7, y: 5}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 9, y: 5}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 1, y: 1}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 3, y: 1}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 5, y: 1}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 7, y: 1}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 9, y: 1}
+    SpecialCubeObjectPrefab: {fileID: 9080482178186198168, guid: a67ddffa5345a5a42990367a8d43525e, type: 3}
+    Type: 2
+  - PosIndex: {x: 1, y: 0}
+    SpecialCubeObjectPrefab: {fileID: 8536195031004353369, guid: 98b8da2175339df41916e2a31bdc0fd5, type: 3}
+    Type: 3
+  - PosIndex: {x: 8, y: 5}
+    SpecialCubeObjectPrefab: {fileID: 8536195031004353369, guid: 98b8da2175339df41916e2a31bdc0fd5, type: 3}
+    Type: 3
+  - PosIndex: {x: 6, y: 3}
+    SpecialCubeObjectPrefab: {fileID: 8536195031004353369, guid: 98b8da2175339df41916e2a31bdc0fd5, type: 3}
+    Type: 3
+  - PosIndex: {x: 9, y: 9}
+    SpecialCubeObjectPrefab: {fileID: 8536195031004353369, guid: 98b8da2175339df41916e2a31bdc0fd5, type: 3}
+    Type: 3
+  - PosIndex: {x: 5, y: 6}
+    SpecialCubeObjectPrefab: {fileID: 8536195031004353369, guid: 98b8da2175339df41916e2a31bdc0fd5, type: 3}
+    Type: 3
+  HorizontalMatrixSize: 10
+  VerticalMatrixSize: 10
+  AllCubes:
+  - {fileID: 3087162430768798196, guid: ab6d58ab1ffea4c4e902b992e07268f0, type: 3}
+  - {fileID: 901486105168558910, guid: 4d3567b382ca8184787a235dd884896a, type: 3}
+  - {fileID: 7820438872805569902, guid: a9787002af077e944bcb56beaf5c2136, type: 3}
+  - {fileID: 6342053304219030694, guid: 2f568ebfa9fe21e43bb890e69d35942e, type: 3}
+  - {fileID: 1430020182192141209, guid: 7f68b7202dd7faa4f978c44bead98461, type: 3}
+  TilePrefab: {fileID: 8509185323530650264, guid: 43af70bdeb01a4f4cb0abcbd1a758cd4, type: 3}
+  GridMatrix: {fileID: 0}
+  MatrixScaler: {fileID: 0}
+  ScaleFactor: {x: 0, y: 0}

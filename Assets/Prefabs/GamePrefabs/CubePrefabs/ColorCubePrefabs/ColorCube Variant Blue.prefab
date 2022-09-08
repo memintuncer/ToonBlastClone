@@ -63,6 +63,10 @@ PrefabInstance:
       propertyPath: Color
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6342053304219030693, guid: 2f568ebfa9fe21e43bb890e69d35942e, type: 3}
+      propertyPath: ParticleEffectPrefab
+      value: 
+      objectReference: {fileID: 2159412803250698780, guid: 3b9ff55acbc37c54487ab3e5a3dc5671, type: 3}
     - target: {fileID: 6342053304219030694, guid: 2f568ebfa9fe21e43bb890e69d35942e, type: 3}
       propertyPath: m_Name
       value: ColorCube Variant Blue

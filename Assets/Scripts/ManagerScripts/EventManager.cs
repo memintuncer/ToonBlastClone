@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Messaging System
+//When classes complete their own transactions, they can send messages through this script. 
+//Other classes listening to the required message perform their own operations according to the incoming message.
+
 public class EventManager : MonoBehaviour
 {
  
@@ -166,21 +171,7 @@ public class EventParam
 
     }
 
-    public EventParam(Dictionary<string, object> paramDictionary)
-    {
-        this.paramDictionary = paramDictionary;
-    }
-
-    public EventParam(GameObject paramObj = null, int paramInt = 0, string paramStr = "", Type paramType = null, Dictionary<string, object> paramDictionary = null)
-    {
-            
-        this.paramObj = paramObj;
-        this.paramInt = paramInt;
-        this.paramStr = paramStr;
-        this.paramType = paramType;
-        this.paramDictionary = paramDictionary;
-        
-    }
+    
 }
 
 

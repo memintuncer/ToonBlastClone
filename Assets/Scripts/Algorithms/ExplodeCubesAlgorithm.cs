@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class ExplodeCubesAlgorithm : MonoBehaviour
 {
-    Dictionary<int, List<int> > EmptyTiles = new Dictionary<int, List<int>>();
+    Dictionary<int, List<int> > EmptyTilesIndexes = new Dictionary<int, List<int>>();
     Dictionary<int, int> EmptyTilesCounts = new Dictionary<int, int>();
     Cube SelectedCube;
+    [SerializeField] private Transform TempParticleEffectsParent;
+    private AudioSource SoundEffect;
+
+    private void Awake()
+    {
+        SoundEffect = GetComponent<AudioSource>();
+    }
     private void OnEnable()
     {
         EventManager.StartListening(GameConstants.GameEvents.COLOR_CUBE_SEARCH_COMPLETED, ColorCubeSearchExplosions);
@@ -21,56 +28,40 @@ public class ExplodeCubesAlgorithm : MonoBehaviour
 
     void ColorCubeSearchExplosions(EventParam param)
     {
+        List<Cube> AllExplodedCubes = new List<Cube>();
         SelectedCube = param.GetSelectedCube();
         List<Cube> color_cubes_to_be_deleted = param.GetColorCubesToBeDeleted();
         List<AffectedByExplosionCube> affected_cubes_to_be_deleted = param.GetAffectedByExplosionCubesToBeDeleted();
         if (color_cubes_to_be_deleted.Count > 1)
         {
-            foreach (Cube c_b in color_cubes_to_be_deleted)
+            SoundEffect.Play();
+            foreach (Cube cube in color_cubes_to_be_deleted)
             {
 
-                TileGrid tile = c_b.GetParentTile();
+                TileGrid tile = cube.GetParentTile();
                 tile.RemoveCubeFromTile();
                 UpdateEmptyTiles(tile);
-                //Destroy(c_b.gameObject);
-                c_b.gameObject.SetActive(false);
-               
+                ((ColorCube)cube).CheckForGameGoal();
+                cube.DestroyCube(TempParticleEffectsParent);
+                
             }
 
 
-            foreach (AffectedByExplosionCube c_b in affected_cubes_to_be_deleted)
+            foreach (AffectedByExplosionCube cube in affected_cubes_to_be_deleted)
             {
-                TileGrid tile = c_b.GetParentTile();
+                TileGrid tile = cube.GetParentTile();
                 tile.RemoveCubeFromTile();
                 UpdateEmptyTiles(tile);
 
-
-                c_b.CheckExplosionCondition();
+                
+                cube.CheckExplosionCondition(TempParticleEffectsParent);
 
 
             }
-            param.SetEmptyTiles(EmptyTiles);
+            param.SetEmptyTiles(EmptyTilesIndexes);
             param.SetEmptyTilesCount(EmptyTilesCounts);
 
-
-            
-
-            foreach(int key in param.GetEmptyTiles().Keys)
-            {
-                Debug.Log("Come");
-                foreach(int i in param.GetEmptyTiles()[ key])
-                {
-                    Debug.Log(key+ "==" + i);
-                }
-            }
-
-
             EventManager.TriggerEvent(GameConstants.GameEvents.CHECK_FOR_DESTROYER_CREATION, param);
-            
-            //SendEmptyTilesMessage(param);
-            
-
-
 
         }
 
@@ -81,26 +72,67 @@ public class ExplodeCubesAlgorithm : MonoBehaviour
         affected_cubes_to_be_deleted.Clear();
         param.SetColorCubesToBeDeleted(color_cubes_to_be_deleted);
         param.SetAffectedByExplosionCubesToBeDeleted(affected_cubes_to_be_deleted);
+        StartCoroutine(DestroyParticleEffects(TempParticleEffectsParent));
+
     }
 
-    
+
+    IEnumerator DestroyParticleEffects(Transform particles_parent)
+    {
+        yield return new WaitForSeconds(2f);
+        int count = particles_parent.childCount;
+
+        for (int i = 0; i < count; i++)
+        {
+            particles_parent.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+   
 
     void DestoyerExplosion(EventParam param)
     {
         List<Cube> cubes_to_be_deleted = param.GetColorCubesToBeDeleted();
+        Debug.Log("Silinecek Sayýsý: " + cubes_to_be_deleted.Count);
         foreach (Cube cube in cubes_to_be_deleted)
         {
 
             TileGrid tile = cube.GetParentTile();
             tile.RemoveCubeFromTile();
             UpdateEmptyTiles(tile);
-            //Destroy(c_b.gameObject);
-            cube.gameObject.SetActive(false);
+
+
+
+            
+
+
+            if (cube.GetCubeType() == Cube.CubeType.Affectible)
+            {
+                
+                ((AffectedByExplosionCube)cube).DestoyerExplosion = true;
+                ((AffectedByExplosionCube)cube).CheckExplosionCondition(TempParticleEffectsParent);
+                
+
+                
+            }
+            if (cube.GetCubeType() == Cube.CubeType.Destroyer)
+            {
+               
+                ((DestoyerCube)cube).DestroyerAnimation();
+            }
+
+            if (cube.GetCubeType() != Cube.CubeType.Destroyer)
+            {
+                
+                cube.DestroyCube(TempParticleEffectsParent);
+                Destroy(cube.gameObject);
+            }
+
+           
 
         }
 
 
-        param.SetEmptyTiles(EmptyTiles);
+        param.SetEmptyTiles(EmptyTilesIndexes);
         param.SetEmptyTilesCount(EmptyTilesCounts);
 
         
@@ -113,19 +145,19 @@ public class ExplodeCubesAlgorithm : MonoBehaviour
         Point dict_point = tile.GetMatrixPoint();
         int dict_key = dict_point.GetMatrixIndexY();
         int new_value = dict_point.GetMatrixIndexX();
-        if (!EmptyTiles.ContainsKey(dict_key))
+        if (!EmptyTilesIndexes.ContainsKey(dict_key))
         {
             List<int> value_list = new List<int>();
             value_list.Add(new_value);
-            EmptyTiles.Add(dict_key, value_list);
+            EmptyTilesIndexes.Add(dict_key, value_list);
             EmptyTilesCounts.Add(dict_key, 0);
 
         }
 
-        if (EmptyTiles.ContainsKey(dict_key))
+        if (EmptyTilesIndexes.ContainsKey(dict_key))
         {
             EmptyTilesCounts[dict_key] += 1;
-            List<int> value_list = EmptyTiles[dict_key];
+            List<int> value_list = EmptyTilesIndexes[dict_key];
             int value_list_count = value_list.Count;
             if(new_value != value_list[value_list_count - 1]){
                 if (Mathf.Abs((new_value - value_list[value_list_count - 1])) == 1)
@@ -156,19 +188,9 @@ public class ExplodeCubesAlgorithm : MonoBehaviour
 
     void SendEmptyTilesMessage(EventParam param)
     {
-       // param.SetEmptyTiles(EmptyTiles);
-       // param.SetEmptyTilesCount(EmptyTilesCounts);
+       
         EventManager.TriggerEvent(GameConstants.GameEvents.START_FILLING_EMPTY_TILES, param);
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

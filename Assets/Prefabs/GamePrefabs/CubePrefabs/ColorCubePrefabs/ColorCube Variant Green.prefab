@@ -63,5 +63,9 @@ PrefabInstance:
       propertyPath: Color
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3087162430768798199, guid: ab6d58ab1ffea4c4e902b992e07268f0, type: 3}
+      propertyPath: ParticleEffectPrefab
+      value: 
+      objectReference: {fileID: 2159412803250698780, guid: 0ede5920b20d16b40b6287971f7c8af5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab6d58ab1ffea4c4e902b992e07268f0, type: 3}

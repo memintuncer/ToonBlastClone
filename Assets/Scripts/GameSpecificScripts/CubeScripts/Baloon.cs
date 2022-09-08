@@ -4,31 +4,49 @@ using UnityEngine;
 
 public class Baloon : AffectedByExplosionCube
 {
-    // Start is called before the first frame update
+    
+    private AudioSource BaloonSound;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
     }
 
-    public override void  CheckExplosionCondition()
+    public override void  CheckExplosionCondition(Transform particle_parent)
     {
-        base.CheckExplosionCondition();
+        base.CheckExplosionCondition(particle_parent);
         if(RequiredExplosionCount==0)
         {
+            BaloonSound = GetComponent<AudioSource>();
+            BaloonSound.Play();
+            CheckForGameGoal();
             this.GetParentTile().RemoveCubeFromTile();
-            Destroy(gameObject);
+            
+            DestroyCube(particle_parent);
+            
            
         }
     }
 
-    public  void Boo()
+    public void CheckForGameGoal()
     {
-        Debug.Log("ASDASDASDASD");
+        List<GameGoal> game_goals = GameManager.GameGoals;
+        for (int i = 0; i < game_goals.Count; i++)
+        {
+            GameGoal game_goal = game_goals[i];
+            if (game_goal.GetGoalType().Equals(cubeType))
+            {
+                game_goal.DecreaseRequiredCount();
+            }
+        }
+
+
     }
+
+
 }
